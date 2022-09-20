@@ -514,7 +514,6 @@ class FeedbackService with AsyncTimer {
           'post_id': '$id',
         },
       );
-      print(commentResponse.data);
       List<Floor> officialCommentList = [];
       for (Map<String, dynamic> json in commentResponse.data['data']['list']) {
         officialCommentList.add(Floor.fromJson(json));
