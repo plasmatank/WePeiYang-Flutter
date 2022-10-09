@@ -11,8 +11,6 @@ class FeedbackDio extends DioAbstract {
   @override
   String baseUrl = '${EnvConfig.QNHD}api/v1/f/';
 
-  // String baseUrl = 'https://www.zrzz.site:7013/api/v1/f/';
-
   @override
   List<InterceptorsWrapper> interceptors = [
     InterceptorsWrapper(onRequest: (options, handler) {
@@ -66,8 +64,6 @@ class FeedbackPicPostDio extends DioAbstract {
 class FeedbackAdminPostDio extends DioAbstract {
   @override
   String baseUrl = '${EnvConfig.QNHD}api/v1/b/';
-
-  // String baseUrl = 'https://www.zrzz.site:7013/api/v1/b/';
 
   @override
   List<InterceptorsWrapper> interceptors = [
@@ -408,6 +404,34 @@ class FeedbackService with AsyncTimer {
       var response = await feedbackDio.get(
         'posts/user',
         queryParameters: {
+          'page': '$page',
+          'page_size': '$page_size',
+        },
+      );
+      List<Post> list = [];
+      for (Map<String, dynamic> json in response.data['data']['list']) {
+        list.add(Post.fromJson(json));
+      }
+      onResult(list);
+    } on DioError catch (e) {
+      onFailure(e);
+    }
+  }
+
+  static getAnyonePosts({
+    @required OnResult<List<Post>> onResult,
+    @required uid,
+    @required page,
+    @required page_size,
+    @required OnFailure onFailure,
+  }) async {
+    try {
+      // 注意這裏用的dio和上面那個不一樣哦
+      var response = await feedbackAdminPostDio.get(
+        'posts/user',
+        queryParameters: {
+          'uid': '$uid',
+          'type': '0',
           'page': '$page',
           'page_size': '$page_size',
         },

@@ -187,7 +187,7 @@ class NSubPageState extends State<NSubPage> with AutomaticKeepAliveClientMixin {
           controller:
               context.read<LakeModel>().lakeAreas[index].refreshController,
           header: ClassicHeader(
-            height: 40.h,
+            height: 5.h,
             completeDuration: Duration(milliseconds: 300),
             idleText: '下拉以刷新 (乀*･ω･)乀',
             releaseText: '下拉以刷新',
@@ -477,10 +477,11 @@ class _LoadingPageWidgetState extends State<LoadingPageWidget>
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
-                      end: isOpa ? Alignment(0, 0.2) : Alignment(0, 2.2),
+                      end: Alignment.bottomCenter,
                       colors: [
-                        Color(0x12FFFFFF),
-                        Color(0x80FFFFFF),
+                        isOpa
+                         ? Color(0x42FFFFFF) : Color(0xA6FFFFFF),
+                        !isOpa ? Color(0x52FFFFFF) : Color(0xB0FFFFFF),
                       ],
                     ),
                   ),
